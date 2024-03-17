@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./partials/header') %>
+        <title>Homepage</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+        <div class="container mt-3 mb-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center mt-4 mb-4">
+                        <img src="<%= blog.coverImgUrl %>" alt="">
+                    </div>
+                    <h2><%= blog.title %></h2>
+                    <p><%= blog.blogContent %></p>
+                </div>
+                <div class="col-md-12">
+                    <div class="user-profile-box" style="display: flex;align-items: center;gap: 10px;">
+                        <img src="<%= blog.createdBy.profileImageUrl %>" class="user-profile-img" alt="<%= blog.title %>" width="50px">
+                        <h6 style="margin-bottom: 0;"><%= blog.createdBy.fullName %></h6>
+                    </div>
+                </div>
+                <hr class="mt-3 mb-3">
+                <div class="col-md-12">
+                    <h3>Comments(<%= comments.length %>)</h3>
+                    <% if (locals.user) { %>
+                    <form method="post" action="/blog/comment/<%= blog._id %>">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add comment</button>
+                    </form>
+                    <% } %>
+                </div>
+                <div class="col-md-12 mt-4">
+                    <% comments.forEach(comment=> { %>
+                        <div class="user-profile-box" style="display: flex;align-items: center;gap: 10px;">
+                            <img src="<%= comment.createdBy.profileImageUrl %>" class="user-profile-img"
+                                alt="<%= comment.createdBy.fullName %>" width="50px">
+                            <h6 style="margin-bottom: 0;">
+                                <%= comment.createdBy.fullName %>
+                            </h6>
+                        </div>
+                            <pre class="mt-2" style="display: block;"><%= comment.comment %></pre>
+                        <% }) %>
+                </div>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+</body>
+
+</html>
